@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Stethoscope, Lock, Mail, Building, Phone, User } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : 'http://localhost:5000/api';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     clinicName: '',
@@ -29,14 +31,14 @@ const Register = () => {
 
     try {
       // Create new clinic account
-      await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post(`${API_BASE}/auth/register`, {
         clinicName: formData.clinicName,
         email: formData.email,
         password: formData.password
       });
 
       // Automatically login after registration
-      const loginRes = await axios.post('http://localhost:5000/api/auth/login', {
+      const loginRes = await axios.post(`${API_BASE}/auth/login`, {
         email: formData.email,
         password: formData.password
       });
